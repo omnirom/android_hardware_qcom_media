@@ -105,6 +105,7 @@ LOCAL_SRC_FILES         += vdec/src/mp4_utils.cpp
 LOCAL_SRC_FILES         += vdec/src/omx_vdec.cpp
 LOCAL_SRC_FILES         += common/src/extra_data_handler.cpp
 LOCAL_SRC_FILES         += common/src/vidc_color_converter.cpp
+LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -127,6 +128,7 @@ LOCAL_SHARED_LIBRARIES    := libutils liblog libOmxCore libOmxVdec libbinder
 
 LOCAL_SRC_FILES           := vdec/src/queue.c
 LOCAL_SRC_FILES           += vdec/test/omx_vdec_test.cpp
+LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 include $(BUILD_EXECUTABLE)
 
@@ -147,6 +149,7 @@ LOCAL_PRELINK_MODULE            := false
 
 LOCAL_SRC_FILES                 := vdec/src/message_queue.c
 LOCAL_SRC_FILES                 += vdec/test/decoder_driver_test.c
+LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 include $(BUILD_EXECUTABLE)
 
