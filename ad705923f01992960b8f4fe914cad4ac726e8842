@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab62b9bd_79315aea",
+        "filename": "mm-video-legacy/vidc/venc/src/video_encoder_device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1430,
+      "author": {
+        "id": 1000170
+      },
+      "writtenOn": "2014-02-02T01:40:02Z",
+      "side": 1,
+      "message": "This will break building for any devices that don\u0027t have matching changes in the kernel.\n\nSee: https://gerrit.omnirom.org/4343/",
+      "revId": "ad705923f01992960b8f4fe914cad4ac726e8842",
+      "serverId": "56841c99-7c94-43d4-bf0b-cb4707e66d55",
+      "unresolved": false
+    }
+  ]
+}
