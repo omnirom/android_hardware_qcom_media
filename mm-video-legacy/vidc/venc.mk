@@ -35,6 +35,11 @@ endif
 ifeq ($(TARGET_USES_ION),true)
 libmm-venc-def += -DUSE_ION
 endif
+
+ifeq ($(SONY_AOSP),true)
+venc-inc       := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+endif
+
 libmm-venc-def += -D_ANDROID_ICS_
 # ---------------------------------------------------------------------------------
 # 			Make the Shared library (libOmxVenc)
@@ -53,6 +58,10 @@ libmm-venc-inc      += frameworks/native/include/media/hardware
 libmm-venc-inc      += frameworks/native/include/media/openmax
 libmm-venc-inc      += hardware/qcom/media/libc2dcolorconvert
 libmm-venc-inc      += frameworks/av/include/media/stagefright
+
+ifeq ($(SONY_AOSP),true)
+libmm-venc-inc      += $(venc-inc)
+endif
 
 LOCAL_MODULE                    := libOmxVenc
 LOCAL_MODULE_TAGS               := optional
@@ -73,6 +82,10 @@ endif
 
 LOCAL_SRC_FILES   += common/src/extra_data_handler.cpp
 
+ifeq ($(SONY_AOSP),true)
+LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+endif
+
 include $(BUILD_SHARED_LIBRARY)
 
 # -----------------------------------------------------------------------------
@@ -87,6 +100,10 @@ mm-venc-test720p-inc            += $(OMX_VIDEO_PATH)/vidc/common/inc
 mm-venc-test720p-inc            += hardware/qcom/media/mm-core/inc
 mm-venc-test720p-inc            += $(TARGET_OUT_HEADERS)/qcom/display
 
+ifeq ($(SONY_AOSP),true)
+mm-venc-test720p-inc            += $(venc-inc)
+endif
+
 LOCAL_MODULE                    := mm-venc-omx-test720p
 LOCAL_MODULE_TAGS               := optional
 LOCAL_CFLAGS                    := $(libmm-venc-def)
@@ -98,6 +115,10 @@ LOCAL_SRC_FILES                 += venc/test/camera_test.cpp
 LOCAL_SRC_FILES                 += venc/test/venc_util.c
 LOCAL_SRC_FILES                 += venc/test/fb_test.c
 
+ifeq ($(SONY_AOSP),true)
+LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+endif
+
 include $(BUILD_EXECUTABLE)
 
 # -----------------------------------------------------------------------------
@@ -108,6 +129,10 @@ include $(CLEAR_VARS)
 
 venc-test-inc                   += $(LOCAL_PATH)/venc/inc
 
+ifeq ($(SONY_AOSP),true)
+venc-test-inc                   += $(venc-inc)
+endif
+
 LOCAL_MODULE                    := mm-video-encdrv-test
 LOCAL_MODULE_TAGS               := optional
 LOCAL_C_INCLUDES                := $(venc-test-inc)
@@ -116,6 +141,10 @@ LOCAL_C_INCLUDES                += hardware/qcom/media/mm-core/inc
 
 LOCAL_SRC_FILES                 := venc/test/video_encoder_test.c
 LOCAL_SRC_FILES                 += venc/test/queue.c
+
+ifeq ($(SONY_AOSP),true)
+LOCAL_ADDITIONAL_DEPENDENCIES  := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+endif
 
 include $(BUILD_EXECUTABLE)
 
