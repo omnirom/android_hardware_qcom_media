@@ -253,7 +253,9 @@ venc_dev::venc_dev(class omx_venc *venc_class)
     supported_rc_modes = RC_ALL;
     camera_mode_enabled = false;
     memset(&ltrinfo, 0, sizeof(ltrinfo));
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
     sess_priority.priority = 1;
+#endif
 #ifdef BOARD_HAS_VIDC_OPERATING_RATE
     operating_rate = 0;
 #endif
@@ -1048,11 +1050,13 @@ bool venc_dev::venc_open(OMX_U32 codec)
         }
     }
 
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
     sess_priority.priority = 1; /* default to non-real-time */
     if (venc_set_session_priority(sess_priority.priority)) {
         DEBUG_PRINT_ERROR("Setting session priority failed");
         return OMX_ErrorUnsupportedSetting;
     }
+#endif
     return true;
 }
 
@@ -2111,6 +2115,7 @@ bool venc_dev::venc_set_config(void *configData, OMX_INDEXTYPE index)
                 }
                 break;
             }
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
         case OMX_IndexConfigPriority:
             {
                 OMX_PARAM_U32TYPE *priority = (OMX_PARAM_U32TYPE *)configData;
@@ -2121,6 +2126,7 @@ bool venc_dev::venc_set_config(void *configData, OMX_INDEXTYPE index)
                 }
                 break;
             }
+#endif
 #ifdef BOARD_HAS_VIDC_OPERATING_RATE
         case OMX_IndexConfigOperatingRate:
             {
@@ -2376,8 +2382,11 @@ void venc_dev::venc_config_print()
     DEBUG_PRINT_HIGH("ENC_CONFIG: VUI timing info enabled: %d", vui_timing_info.enabled);
 
     DEBUG_PRINT_HIGH("ENC_CONFIG: Peak bitrate: %d", peak_bitrate.peakbitrate);
-
+    
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
     DEBUG_PRINT_HIGH("ENC_CONFIG: Session Priority: %u", sess_priority.priority);
+#endif
+
 #ifdef BOARD_HAS_VIDC_OPERATING_RATE
     DEBUG_PRINT_HIGH("ENC_CONFIG: Operating Rate: %u", operating_rate);
 #endif
@@ -4710,6 +4719,7 @@ bool venc_dev::venc_set_vpx_error_resilience(OMX_BOOL enable)
     return true;
 }
 
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
 bool venc_dev::venc_set_session_priority(OMX_U32 priority) {
     struct v4l2_control control;
 
@@ -4740,6 +4750,7 @@ bool venc_dev::venc_set_session_priority(OMX_U32 priority) {
             control.id, control.value);
     return true;
 }
+#endif
 
 #ifdef BOARD_HAS_VIDC_OPERATING_RATE
 bool venc_dev::venc_set_operatingrate(OMX_U32 rate) {

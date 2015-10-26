@@ -2068,6 +2068,7 @@ OMX_ERRORTYPE omx_vdec::component_init(OMX_STRING role)
                 drv_ctx.video_driver_fd);
     }
     //memset(&h264_mv_buff,0,sizeof(struct h264_mv_buffer));
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
     control.id = V4L2_CID_MPEG_VIDC_VIDEO_PRIORITY;
     control.value = V4L2_MPEG_VIDC_VIDEO_PRIORITY_REALTIME_DISABLE;
 
@@ -2075,6 +2076,7 @@ OMX_ERRORTYPE omx_vdec::component_init(OMX_STRING role)
         DEBUG_PRINT_ERROR("Failed to set Default Priority");
         eRet = OMX_ErrorUnsupportedSetting;
     }
+#endif
     return eRet;
 }
 
@@ -4449,6 +4451,7 @@ OMX_ERRORTYPE  omx_vdec::set_config(OMX_IN OMX_HANDLETYPE      hComp,
         }
 
         return ret;
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
     } else if ((int)configIndex == (int)OMX_IndexConfigPriority) {
         OMX_PARAM_U32TYPE *priority = (OMX_PARAM_U32TYPE *)configData;
         DEBUG_PRINT_LOW("Set_config: priority %d", priority->nU32);
@@ -4466,6 +4469,7 @@ OMX_ERRORTYPE  omx_vdec::set_config(OMX_IN OMX_HANDLETYPE      hComp,
             ret = OMX_ErrorUnsupportedSetting;
         }
         return ret;
+#endif
 #ifdef BOARD_HAS_VIDC_OPERATING_RATE
     } else if ((int)configIndex == (int)OMX_IndexConfigOperatingRate) {
         OMX_PARAM_U32TYPE *rate = (OMX_PARAM_U32TYPE *)configData;

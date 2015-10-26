@@ -84,6 +84,10 @@ ifeq ($(TARGET_USES_ION),true)
 libOmxVdec-def += -DUSE_ION
 endif
 
+ifneq ($(BOARD_HAS_VIDC_INSTANCE_PRIORITY),false)
+libOmxVdec-def += -DBOARD_HAS_VIDC_INSTANCE_PRIORITY
+endif
+
 ifneq ($(BOARD_HAS_VIDC_OPERATING_RATE),false)
 libOmxVdec-def += -DBOARD_HAS_VIDC_OPERATING_RATE
 endif
