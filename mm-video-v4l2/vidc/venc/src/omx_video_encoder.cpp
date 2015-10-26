@@ -1775,6 +1775,7 @@ OMX_ERRORTYPE  omx_venc::set_config(OMX_IN OMX_HANDLETYPE      hComp,
                 }
                 break;
             }
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
         case OMX_IndexConfigPriority:
             {
                 if (!handle->venc_set_config(configData, (OMX_INDEXTYPE)OMX_IndexConfigPriority)) {
@@ -1783,6 +1784,7 @@ OMX_ERRORTYPE  omx_venc::set_config(OMX_IN OMX_HANDLETYPE      hComp,
                 }
                 break;
             }
+#endif
 #ifdef BOARD_HAS_VIDC_OPERATING_RATE
         case OMX_IndexConfigOperatingRate:
             {

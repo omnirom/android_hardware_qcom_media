@@ -215,9 +215,11 @@ struct msm_venc_vpx_error_resilience {
     unsigned int enable;
 };
 
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
 struct msm_venc_priority {
     OMX_U32 priority;
 };
+#endif
 
 enum v4l2_ports {
     CAPTURE_PORT,
@@ -356,7 +358,9 @@ class venc_dev
         struct msm_venc_peak_bitrate        peak_bitrate;
         struct msm_venc_ltrinfo             ltrinfo;
         struct msm_venc_vpx_error_resilience vpx_err_resilience;
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
         struct msm_venc_priority            sess_priority;
+#endif
 #ifdef BOARD_HAS_VIDC_OPERATING_RATE
         OMX_U32                             operating_rate;
 #endif
@@ -400,7 +404,9 @@ class venc_dev
         bool venc_set_hybrid_hierp(OMX_U32 layers);
         bool venc_calibrate_gop();
         bool venc_validate_hybridhp_params(OMX_U32 layers, OMX_U32 bFrames, OMX_U32 count, int mode);
+#ifdef BOARD_HAS_VIDC_INSTANCE_PRIORITY
         bool venc_set_session_priority(OMX_U32 priority);
+#endif
 #ifdef BOARD_HAS_VIDC_OPERATING_RATE
         bool venc_set_operatingrate(OMX_U32 rate);
 #endif
