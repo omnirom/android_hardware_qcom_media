@@ -4466,6 +4466,7 @@ OMX_ERRORTYPE  omx_vdec::set_config(OMX_IN OMX_HANDLETYPE      hComp,
             ret = OMX_ErrorUnsupportedSetting;
         }
         return ret;
+#ifdef BOARD_HAS_VIDC_OPERATING_RATE
     } else if ((int)configIndex == (int)OMX_IndexConfigOperatingRate) {
         OMX_PARAM_U32TYPE *rate = (OMX_PARAM_U32TYPE *)configData;
         DEBUG_PRINT_LOW("Set_config: operating-rate %u fps", rate->nU32 >> 16);
@@ -4482,6 +4483,7 @@ OMX_ERRORTYPE  omx_vdec::set_config(OMX_IN OMX_HANDLETYPE      hComp,
                     rate->nU32 >> 16, errno == -EBUSY ? "HW Overload" : strerror(errno));
         }
         return ret;
+#endif
     }
 
     return OMX_ErrorNotImplemented;
