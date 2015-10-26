@@ -254,7 +254,9 @@ venc_dev::venc_dev(class omx_venc *venc_class)
     camera_mode_enabled = false;
     memset(&ltrinfo, 0, sizeof(ltrinfo));
     sess_priority.priority = 1;
+#ifdef BOARD_HAS_VIDC_OPERATING_RATE
     operating_rate = 0;
+#endif
 
     char property_value[PROPERTY_VALUE_MAX] = {0};
     property_get("vidc.enc.log.in", property_value, "0");
@@ -2105,6 +2107,7 @@ bool venc_dev::venc_set_config(void *configData, OMX_INDEXTYPE index)
                 }
                 break;
             }
+#ifdef BOARD_HAS_VIDC_OPERATING_RATE
         case OMX_IndexConfigOperatingRate:
             {
                 OMX_PARAM_U32TYPE *rate = (OMX_PARAM_U32TYPE *)configData;
@@ -2115,6 +2118,7 @@ bool venc_dev::venc_set_config(void *configData, OMX_INDEXTYPE index)
                 }
                 break;
             }
+#endif
         default:
             DEBUG_PRINT_ERROR("Unsupported config index = %u", index);
             break;
@@ -2360,8 +2364,9 @@ void venc_dev::venc_config_print()
     DEBUG_PRINT_HIGH("ENC_CONFIG: Peak bitrate: %d", peak_bitrate.peakbitrate);
 
     DEBUG_PRINT_HIGH("ENC_CONFIG: Session Priority: %u", sess_priority.priority);
-
+#ifdef BOARD_HAS_VIDC_OPERATING_RATE
     DEBUG_PRINT_HIGH("ENC_CONFIG: Operating Rate: %u", operating_rate);
+#endif
 }
 
 bool venc_dev::venc_reconfig_reqbufs()
@@ -4692,6 +4697,7 @@ bool venc_dev::venc_set_session_priority(OMX_U32 priority) {
     return true;
 }
 
+#ifdef BOARD_HAS_VIDC_OPERATING_RATE
 bool venc_dev::venc_set_operatingrate(OMX_U32 rate) {
     struct v4l2_control control;
 
@@ -4711,6 +4717,7 @@ bool venc_dev::venc_set_operatingrate(OMX_U32 rate) {
     DEBUG_PRINT_LOW("Operating Rate Set = %d fps",  rate >> 16);
     return true;
 }
+#endif
 
 bool venc_dev::venc_get_profile_level(OMX_U32 *eProfile,OMX_U32 *eLevel)
 {
