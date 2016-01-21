@@ -68,10 +68,6 @@ ifeq ($(TARGET_USES_ION),true)
 libmm-venc-def += -DUSE_ION
 endif
 
-ifneq ($(BOARD_HAS_VIDC_OPERATING_RATE),false)
-libmm-venc-def += -DBOARD_HAS_VIDC_OPERATING_RATE
-endif
-
 libmm-venc-def += -D_ANDROID_ICS_
 # ---------------------------------------------------------------------------------
 # 			Make the Shared library (libOmxVenc)
