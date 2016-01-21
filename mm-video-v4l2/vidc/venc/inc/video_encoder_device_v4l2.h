@@ -357,9 +357,7 @@ class venc_dev
         struct msm_venc_ltrinfo             ltrinfo;
         struct msm_venc_vpx_error_resilience vpx_err_resilience;
         struct msm_venc_priority            sess_priority;
-#ifdef BOARD_HAS_VIDC_OPERATING_RATE
         OMX_U32                             operating_rate;
-#endif
 
         bool venc_set_profile_level(OMX_U32 eProfile,OMX_U32 eLevel);
         bool venc_set_intra_period(OMX_U32 nPFrames, OMX_U32 nBFrames);
@@ -401,9 +399,7 @@ class venc_dev
         bool venc_calibrate_gop();
         bool venc_validate_hybridhp_params(OMX_U32 layers, OMX_U32 bFrames, OMX_U32 count, int mode);
         bool venc_set_session_priority(OMX_U32 priority);
-#ifdef BOARD_HAS_VIDC_OPERATING_RATE
         bool venc_set_operatingrate(OMX_U32 rate);
-#endif
 
 #ifdef MAX_RES_1080P
         OMX_U32 pmem_free();
