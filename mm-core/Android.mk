@@ -8,10 +8,6 @@ OMXCORE_CFLAGS += -O0 -fno-inline -fno-short-enums
 OMXCORE_CFLAGS += -D_ANDROID_
 OMXCORE_CFLAGS += -U_ENABLE_QC_MSG_LOG_
 
-ifneq ($(BOARD_HAS_VIDC_INSTANCE_PRIORITY),false)
-OMXCORE_CFLAGS += -DBOARD_HAS_VIDC_INSTANCE_PRIORITY
-endif
-
 #===============================================================================
 #             Figure out the targets
 #===============================================================================
