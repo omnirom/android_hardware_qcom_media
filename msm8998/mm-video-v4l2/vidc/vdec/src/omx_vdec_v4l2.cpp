@@ -1065,6 +1065,7 @@ OMX_ERRORTYPE omx_vdec::decide_dpb_buffer_mode(bool split_opb_dpb_with_same_colo
         dpb_bit_depth == MSM_VIDC_BIT_DEPTH_10;
     bool dither_enable = true;
 
+#ifdef _UBWC_
     switch (m_dither_config) {
     case DITHER_DISABLE:
         dither_enable = false;
@@ -1098,7 +1099,7 @@ OMX_ERRORTYPE omx_vdec::decide_dpb_buffer_mode(bool split_opb_dpb_with_same_colo
         }
 
     }
-
+#endif /* _UBWC_ */
 
     if (!BITMASK_PRESENT(&m_flags ,OMX_COMPONENT_IDLE_PENDING) &&
         !BITMASK_PRESENT(&m_flags, OMX_COMPONENT_OUTPUT_ENABLE_PENDING)) {
@@ -1106,7 +1107,7 @@ OMX_ERRORTYPE omx_vdec::decide_dpb_buffer_mode(bool split_opb_dpb_with_same_colo
         return eRet;
     }
 
-
+#ifdef _UBWC_
     if (cpu_access) {
         if (dpb_bit_depth == MSM_VIDC_BIT_DEPTH_8) {
             /* Disabled split mode for VP9. In split mode the DPB buffers are part of the internal
@@ -1170,6 +1171,10 @@ OMX_ERRORTYPE omx_vdec::decide_dpb_buffer_mode(bool split_opb_dpb_with_same_colo
             }
         }
     }
+#else
+    eRet = set_dpb(force_split_mode, V4L2_MPEG_VIDC_VIDEO_DPB_COLOR_FMT_NONE);
+#endif /* _UBWC_ */
+
     if (eRet) {
         DEBUG_PRINT_HIGH("Failed to set DPB buffer mode: %d", eRet);
     }
